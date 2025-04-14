@@ -16,6 +16,7 @@ class GenerateTattoo implements UseCase<Tattoo, GenerateTattooParams> {
       prompt: params.prompt,
       style: params.style,
       outputLocation: params.outputLocation,
+      aspectRatio: params.aspectRatio,
     );
   }
 }
@@ -24,13 +25,15 @@ class GenerateTattooParams extends Equatable {
   final String prompt;
   final String style;
   final String outputLocation;
+  final String aspectRatio;
 
   const GenerateTattooParams({
     required this.prompt,
     required this.style,
     required this.outputLocation,
+    required this.aspectRatio,
   });
 
   @override
-  List<Object> get props => [prompt, style, outputLocation];
+  List<Object> get props => [prompt, style, outputLocation, aspectRatio];
 }

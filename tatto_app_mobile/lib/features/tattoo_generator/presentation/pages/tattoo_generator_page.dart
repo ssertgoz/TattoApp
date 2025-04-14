@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tatto_app_mobile/core/constants/app_constants.dart';
+import 'package:tatto_app_mobile/core/widgets/choice_chip_selector.dart';
 import '../bloc/tattoo_generator_bloc.dart';
-import '../widgets/style_selector.dart';
-import '../widgets/output_location_selector.dart';
+import 'tattoo_generating_page.dart';
 
 class TattooGeneratorPage extends StatefulWidget {
   const TattooGeneratorPage({super.key});
@@ -13,8 +14,9 @@ class TattooGeneratorPage extends StatefulWidget {
 
 class _TattooGeneratorPageState extends State<TattooGeneratorPage> {
   final _promptController = TextEditingController();
-  String _selectedStyle = 'Blackwork';
-  String _selectedLocation = 'Leg';
+  String _selectedStyle = AppConstants.styles.first;
+  String _selectedLocation = AppConstants.outputLocations.first;
+  String _selectedAspectRatio = AppConstants.aspectRatios.first;
 
   @override
   void dispose() {
@@ -23,80 +25,130 @@ class _TattooGeneratorPageState extends State<TattooGeneratorPage> {
   }
 
   void _generateTattoo() {
-    context.read<TattooGeneratorBloc>().add(
-          GenerateTattooEvent(
+    if (_promptController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Please enter a description'),
+          backgroundColor: Colors.black,
+        ),
+      );
+      return;
+    }
+
+    final bloc = context.read<TattooGeneratorBloc>();
+
+    bloc.add(
+      GenerateTattooEvent(
+        prompt: _promptController.text,
+        style: _selectedStyle,
+        outputLocation: _selectedLocation,
+        aspectRatio: _selectedAspectRatio,
+      ),
+    );
+
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => BlocProvider.value(
+          value: bloc,
+          child: TattooGeneratingPage(
             prompt: _promptController.text,
             style: _selectedStyle,
             outputLocation: _selectedLocation,
+            aspectRatio: _selectedAspectRatio,
           ),
-        );
+        ),
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppConstants.backgroundColor,
       appBar: AppBar(
-        title: const Text('Tattoo Generator'),
+        backgroundColor: AppConstants.backgroundColor,
+        title: const Text(
+          'Tattoo Generator',
+          style: TextStyle(color: Colors.white),
+        ),
         centerTitle: true,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            TextField(
-              controller: _promptController,
-              decoration: const InputDecoration(
-                labelText: 'Enter your tattoo description',
-                border: OutlineInputBorder(),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.white10,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: TextField(
+                  controller: _promptController,
+                  style: const TextStyle(color: Colors.white),
+                  decoration: InputDecoration(
+                    hintText: 'Enter your tattoo description',
+                    hintStyle: const TextStyle(color: Colors.white54),
+                    border: InputBorder.none,
+                    contentPadding: const EdgeInsets.all(16),
+                    suffixIcon: _promptController.text.isNotEmpty
+                        ? IconButton(
+                            icon: const Icon(Icons.close, color: Colors.white54),
+                            onPressed: () {
+                              setState(() {
+                                _promptController.clear();
+                              });
+                            },
+                          )
+                        : null,
+                  ),
+                  maxLines: 3,
+                  onChanged: (_) => setState(() {}),
+                ),
               ),
-              maxLines: 3,
-            ),
-            const SizedBox(height: 16),
-            StyleSelector(
-              selectedStyle: _selectedStyle,
-              onStyleSelected: (style) {
-                setState(() => _selectedStyle = style);
-              },
-            ),
-            const SizedBox(height: 16),
-            OutputLocationSelector(
-              selectedLocation: _selectedLocation,
-              onLocationSelected: (location) {
-                setState(() => _selectedLocation = location);
-              },
-            ),
-            const SizedBox(height: 24),
-            ElevatedButton(
-              onPressed: _generateTattoo,
-              child: const Text('Generate Tattoo'),
-            ),
-            const SizedBox(height: 24),
-            Expanded(
-              child: BlocBuilder<TattooGeneratorBloc, TattooGeneratorState>(
-                builder: (context, state) {
-                  if (state is TattooGeneratorLoading) {
-                    return const Center(child: CircularProgressIndicator());
-                  } else if (state is TattooGeneratorSuccess) {
-                    return Image.network(
-                      state.tattoo.imageUrl,
-                      fit: BoxFit.contain,
-                    );
-                  } else if (state is TattooGeneratorError) {
-                    return Center(
-                      child: Text(
-                        state.message,
-                        style: const TextStyle(color: Colors.red),
-                      ),
-                    );
-                  }
-                  return const Center(
-                    child: Text('Enter a prompt and generate your tattoo'),
-                  );
+              const SizedBox(height: 24),
+              ChoiceChipSelector(
+                label: 'Style',
+                options: AppConstants.styles,
+                selectedOption: _selectedStyle,
+                onOptionSelected: (style) {
+                  setState(() => _selectedStyle = style);
                 },
               ),
-            ),
-          ],
+              const SizedBox(height: 24),
+              ChoiceChipSelector(
+                label: 'Output Location',
+                options: AppConstants.outputLocations,
+                selectedOption: _selectedLocation,
+                onOptionSelected: (location) {
+                  setState(() => _selectedLocation = location);
+                },
+              ),
+              const SizedBox(height: 24),
+              ChoiceChipSelector(
+                label: 'Aspect Ratio',
+                options: AppConstants.aspectRatios,
+                selectedOption: _selectedAspectRatio,
+                onOptionSelected: (ratio) {
+                  setState(() => _selectedAspectRatio = ratio);
+                },
+              ),
+              const SizedBox(height: 32),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppConstants.primaryColor,
+                  minimumSize: const Size(double.infinity, 48),
+                  disabledBackgroundColor: Colors.grey,
+                ),
+                onPressed: _promptController.text.trim().isEmpty ? null : _generateTattoo,
+                child: const Text(
+                  'Generate',
+                  style: TextStyle(fontSize: 16, color: Colors.white),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -24,6 +24,7 @@ class TattooGeneratorBloc extends Bloc<TattooGeneratorEvent, TattooGeneratorStat
         prompt: event.prompt,
         style: event.style,
         outputLocation: event.outputLocation,
+        aspectRatio: event.aspectRatio,
       ),
     );
 

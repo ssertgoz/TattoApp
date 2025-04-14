@@ -7,5 +7,6 @@ abstract class TattooRepository {
     required String prompt,
     required String style,
     required String outputLocation,
+    required String aspectRatio,
   });
 }

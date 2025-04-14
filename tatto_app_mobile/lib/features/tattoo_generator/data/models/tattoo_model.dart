@@ -6,11 +6,13 @@ class TattooModel extends Tattoo {
     required String prompt,
     required String style,
     required String outputLocation,
+    required String aspectRatio,
   }) : super(
           imageUrl: imageUrl,
           prompt: prompt,
           style: style,
           outputLocation: outputLocation,
+          aspectRatio: aspectRatio,
         );
 
   factory TattooModel.fromJson(Map<String, dynamic> json) {
@@ -19,6 +21,7 @@ class TattooModel extends Tattoo {
       prompt: json['prompt'] as String,
       style: json['style'] as String,
       outputLocation: json['outputLocation'] as String,
+      aspectRatio: json['aspectRatio'] as String,
     );
   }
 
@@ -28,6 +31,7 @@ class TattooModel extends Tattoo {
       'prompt': prompt,
       'style': style,
       'outputLocation': outputLocation,
+      'aspectRatio': aspectRatio,
     };
   }
 }

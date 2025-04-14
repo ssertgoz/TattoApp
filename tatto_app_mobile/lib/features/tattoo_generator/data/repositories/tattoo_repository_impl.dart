@@ -15,12 +15,14 @@ class TattooRepositoryImpl implements TattooRepository {
     required String prompt,
     required String style,
     required String outputLocation,
+    required String aspectRatio,
   }) async {
     try {
       final tattoo = await remoteDataSource.generateTattoo(
         prompt: prompt,
         style: style,
         outputLocation: outputLocation,
+        aspectRatio: aspectRatio,
       );
       return Right(tattoo);
     } catch (e) {
