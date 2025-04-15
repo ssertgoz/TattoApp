@@ -2,6 +2,12 @@
 
 A full-stack application for generating AI-powered tattoo designs. The app consists of a Flutter mobile application and a FastAPI backend service.
 
+## Demo Video
+
+https://github.com/user-attachments/assets/6f24265c-218c-4879-a7fc-eda9fc2cd5af
+
+
+
 ## Features
 
 - Generate AI-powered tattoo designs based on user prompts
