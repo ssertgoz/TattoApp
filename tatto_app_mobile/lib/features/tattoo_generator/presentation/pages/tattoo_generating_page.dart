@@ -6,23 +6,21 @@ import 'tattoo_result_page.dart';
 import '../../../../main.dart';
 
 class TattooGeneratingPage extends StatelessWidget {
-  final String prompt;
-  final String style;
-  final String outputLocation;
-  final String aspectRatio;
-
   const TattooGeneratingPage({
     super.key,
-    required this.prompt,
-    required this.style,
-    required this.outputLocation,
-    required this.aspectRatio,
   });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () => navigatorKey.currentState?.pop(),
+        ),
+      ),
       body: BlocConsumer<TattooGeneratorBloc, TattooGeneratorState>(
         listener: (context, state) {
           if (state is TattooGeneratorSuccess) {
@@ -43,7 +41,39 @@ class TattooGeneratingPage extends StatelessWidget {
         },
         builder: (context, state) {
           if (state is TattooGeneratorError) {
-            return const SizedBox.shrink();
+            return SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(
+                      Icons.error_outline,
+                      color: Colors.red,
+                      size: 64,
+                    ),
+                    const SizedBox(height: 16),
+                    Text(
+                      state.message,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                      ),
+                    ),
+                    const SizedBox(height: 32),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.red,
+                        minimumSize: const Size(200, 48),
+                      ),
+                      onPressed: () => navigatorKey.currentState?.pop(),
+                      child: const Text('Go Back'),
+                    ),
+                  ],
+                ),
+              ),
+            );
           }
 
           return SafeArea(

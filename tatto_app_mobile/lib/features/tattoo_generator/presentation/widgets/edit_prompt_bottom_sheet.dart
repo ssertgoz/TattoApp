@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tatto_app_mobile/core/constants/app_constants.dart';
 import '../../../../main.dart';
 import '../bloc/tattoo_generator/index.dart';
 import '../pages/tattoo_generating_page.dart';
@@ -51,20 +52,16 @@ class _EditPromptBottomSheetState extends State<EditPromptBottomSheet> {
     bloc.add(
       GenerateTattooEvent(
         prompt: _promptController.text,
-        style: widget.style,
-        outputLocation: widget.outputLocation,
-        aspectRatio: widget.aspectRatio,
+        style: TattooStyle.values.firstWhere((s) => s.name == widget.style),
+        outputLocation: OutputLocation.values.firstWhere((s) => s.name == widget.outputLocation),
+        aspectRatio:
+            ImageAspectRatio.values.firstWhere((s) => s.toJsonValue() == widget.aspectRatio),
       ),
     );
 
     navigatorKey.currentState?.pushReplacement(
       MaterialPageRoute(
-        builder: (context) => TattooGeneratingPage(
-          prompt: _promptController.text,
-          style: widget.style,
-          outputLocation: widget.outputLocation,
-          aspectRatio: widget.aspectRatio,
-        ),
+        builder: (context) => TattooGeneratingPage(),
       ),
     );
   }

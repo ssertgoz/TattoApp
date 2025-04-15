@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tatto_app_mobile/core/constants/app_constants.dart';
-import 'injection_container.dart' as di;
+import 'core/di/injection_container.dart' as di;
 import 'features/tattoo_generator/presentation/bloc/image_saver/index.dart';
 import 'features/tattoo_generator/presentation/bloc/tattoo_generator/index.dart';
 import 'features/tattoo_generator/presentation/pages/tattoo_generator_page.dart';

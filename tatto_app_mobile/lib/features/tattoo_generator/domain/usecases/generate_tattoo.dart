@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
+import 'package:tatto_app_mobile/core/constants/app_constants.dart';
 import '../../../../core/error/failures.dart';
 import '../../../../core/usecases/usecase.dart';
 import '../entities/tattoo.dart';
@@ -23,9 +24,9 @@ class GenerateTattoo implements UseCase<Tattoo, GenerateTattooParams> {
 
 class GenerateTattooParams extends Equatable {
   final String prompt;
-  final String style;
-  final String outputLocation;
-  final String aspectRatio;
+  final TattooStyle style;
+  final OutputLocation outputLocation;
+  final ImageAspectRatio aspectRatio;
 
   const GenerateTattooParams({
     required this.prompt,

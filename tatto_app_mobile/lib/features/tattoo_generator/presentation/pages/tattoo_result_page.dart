@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tatto_app_mobile/core/constants/app_constants.dart';
 import 'package:tatto_app_mobile/main.dart';
 import '../../domain/entities/tattoo.dart';
 import '../bloc/image_saver/index.dart';
@@ -86,19 +87,16 @@ class TattooResultPage extends StatelessWidget {
                         bloc.add(
                           GenerateTattooEvent(
                             prompt: tattoo.prompt,
-                            style: tattoo.style,
-                            outputLocation: tattoo.outputLocation,
-                            aspectRatio: tattoo.aspectRatio,
+                            style: TattooStyle.values.firstWhere((s) => s.name == tattoo.style),
+                            outputLocation: OutputLocation.values
+                                .firstWhere((s) => s.name == tattoo.outputLocation),
+                            aspectRatio: ImageAspectRatio.values
+                                .firstWhere((s) => s.toJsonValue() == tattoo.aspectRatio),
                           ),
                         );
                         navigatorKey.currentState?.pushReplacement(
                           MaterialPageRoute(
-                            builder: (context) => TattooGeneratingPage(
-                              prompt: tattoo.prompt,
-                              style: tattoo.style,
-                              outputLocation: tattoo.outputLocation,
-                              aspectRatio: tattoo.aspectRatio,
-                            ),
+                            builder: (context) => TattooGeneratingPage(),
                           ),
                         );
                       },

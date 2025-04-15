@@ -16,9 +16,9 @@ class TattooGeneratorPage extends StatefulWidget {
 
 class _TattooGeneratorPageState extends State<TattooGeneratorPage> {
   final _promptController = TextEditingController();
-  String _selectedStyle = AppConstants.styles.first;
-  String _selectedLocation = AppConstants.outputLocations.first;
-  String _selectedAspectRatio = AppConstants.aspectRatios.first;
+  TattooStyle _selectedStyle = AppConstants.styles.first;
+  OutputLocation _selectedLocation = AppConstants.outputLocations.first;
+  ImageAspectRatio _selectedAspectRatio = AppConstants.aspectRatios.first;
 
   @override
   void dispose() {
@@ -50,12 +50,7 @@ class _TattooGeneratorPageState extends State<TattooGeneratorPage> {
 
     navigatorKey.currentState?.push(
       MaterialPageRoute(
-        builder: (context) => TattooGeneratingPage(
-          prompt: _promptController.text,
-          style: _selectedStyle,
-          outputLocation: _selectedLocation,
-          aspectRatio: _selectedAspectRatio,
-        ),
+        builder: (context) => TattooGeneratingPage(),
       ),
     );
   }
@@ -93,8 +88,7 @@ class _TattooGeneratorPageState extends State<TattooGeneratorPage> {
                     contentPadding: const EdgeInsets.all(16),
                     suffixIcon: _promptController.text.isNotEmpty
                         ? IconButton(
-                            icon:
-                                const Icon(Icons.close, color: Colors.white54),
+                            icon: const Icon(Icons.close, color: Colors.white54),
                             onPressed: () {
                               setState(() {
                                 _promptController.clear();
@@ -110,28 +104,31 @@ class _TattooGeneratorPageState extends State<TattooGeneratorPage> {
               const SizedBox(height: 24),
               ChoiceChipSelector(
                 label: 'Style',
-                options: AppConstants.styles,
-                selectedOption: _selectedStyle,
+                options: AppConstants.styles.map((s) => s.name).toList(),
+                selectedOption: _selectedStyle.name,
                 onOptionSelected: (style) {
-                  setState(() => _selectedStyle = style);
+                  setState(
+                      () => _selectedStyle = TattooStyle.values.firstWhere((s) => s.name == style));
                 },
               ),
               const SizedBox(height: 24),
               ChoiceChipSelector(
                 label: 'Output Location',
-                options: AppConstants.outputLocations,
-                selectedOption: _selectedLocation,
+                options: AppConstants.outputLocations.map((s) => s.name).toList(),
+                selectedOption: _selectedLocation.name,
                 onOptionSelected: (location) {
-                  setState(() => _selectedLocation = location);
+                  setState(() => _selectedLocation =
+                      OutputLocation.values.firstWhere((s) => s.name == location));
                 },
               ),
               const SizedBox(height: 24),
               ChoiceChipSelector(
                 label: 'Aspect Ratio',
-                options: AppConstants.aspectRatios,
-                selectedOption: _selectedAspectRatio,
+                options: AppConstants.aspectRatios.map((s) => s.name).toList(),
+                selectedOption: _selectedAspectRatio.name,
                 onOptionSelected: (ratio) {
-                  setState(() => _selectedAspectRatio = ratio);
+                  setState(() => _selectedAspectRatio =
+                      ImageAspectRatio.values.firstWhere((s) => s.name == ratio));
                 },
               ),
               const SizedBox(height: 32),
@@ -141,9 +138,7 @@ class _TattooGeneratorPageState extends State<TattooGeneratorPage> {
                   minimumSize: const Size(double.infinity, 48),
                   disabledBackgroundColor: Colors.grey,
                 ),
-                onPressed: _promptController.text.trim().isEmpty
-                    ? null
-                    : _generateTattoo,
+                onPressed: _promptController.text.trim().isEmpty ? null : _generateTattoo,
                 child: const Text(
                   'Generate',
                   style: TextStyle(fontSize: 16, color: Colors.white),

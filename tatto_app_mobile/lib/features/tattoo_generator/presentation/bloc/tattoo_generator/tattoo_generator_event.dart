@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:tatto_app_mobile/core/constants/app_constants.dart';
 
 abstract class TattooGeneratorEvent extends Equatable {
   const TattooGeneratorEvent();
@@ -9,9 +10,9 @@ abstract class TattooGeneratorEvent extends Equatable {
 
 class GenerateTattooEvent extends TattooGeneratorEvent {
   final String prompt;
-  final String style;
-  final String outputLocation;
-  final String aspectRatio;
+  final TattooStyle style;
+  final OutputLocation outputLocation;
+  final ImageAspectRatio aspectRatio;
 
   const GenerateTattooEvent({
     required this.prompt,

@@ -32,6 +32,4 @@ class TattooGeneratorBloc extends Bloc<TattooGeneratorEvent, TattooGeneratorStat
       (tattoo) => emit(TattooGeneratorSuccess(tattoo)),
     );
   }
-
-
 }

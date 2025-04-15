@@ -1,9 +1,55 @@
 import 'package:flutter/material.dart';
 
+enum TattooStyle {
+  blackwork,
+  geometric,
+  minimalist;
+
+  String displayName() {
+    final name = toString().split('.').last;
+    return name[0].toUpperCase() + name.substring(1);
+  }
+}
+
+enum OutputLocation {
+  leg,
+  back,
+  whitepaper;
+
+  String displayName() {
+    final name = toString().split('.').last;
+    return name[0].toUpperCase() + name.substring(1);
+  }
+}
+
+enum ImageAspectRatio {
+  square,
+  portrait,
+  landscape;
+
+  String displayName() {
+    final name = toString().split('.').last;
+    return name[0].toUpperCase() + name.substring(1);
+  }
+
+  String toJsonValue() {
+    switch (this) {
+      case square:
+        return '1:1';
+      case portrait:
+        return '2:3';
+      case landscape:
+        return '3:2';
+    }
+  }
+}
+
 class AppConstants {
-  static const List<String> styles = ['No Style', 'Blackwork', 'Geometric', 'Minimalist'];
-  static const List<String> outputLocations = ['Leg', 'Back', 'Whitepaper'];
-  static const List<String> aspectRatios = ['1:1', '4:5', '9:16'];
+  static List<TattooStyle> get styles => TattooStyle.values;
+
+  static List<OutputLocation> get outputLocations => OutputLocation.values;
+
+  static List<ImageAspectRatio> get aspectRatios => ImageAspectRatio.values;
 
   static const Color primaryColor = Color(0xFFFF4B55);
   static const Color backgroundColor = Color(0xFF000000);

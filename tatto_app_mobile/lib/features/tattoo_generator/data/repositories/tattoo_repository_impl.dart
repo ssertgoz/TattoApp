@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:tatto_app_mobile/core/constants/app_constants.dart';
 
 import '../../../../core/error/failures.dart';
 import '../../domain/entities/tattoo.dart';
@@ -13,9 +14,9 @@ class TattooRepositoryImpl implements TattooRepository {
   @override
   Future<Either<Failure, Tattoo>> generateTattoo({
     required String prompt,
-    required String style,
-    required String outputLocation,
-    required String aspectRatio,
+    required TattooStyle style,
+    required OutputLocation outputLocation,
+    required ImageAspectRatio aspectRatio,
   }) async {
     try {
       final tattoo = await remoteDataSource.generateTattoo(
