@@ -4,12 +4,14 @@ import 'features/tattoo_generator/data/datasources/tattoo_remote_data_source.dar
 import 'features/tattoo_generator/data/repositories/tattoo_repository_impl.dart';
 import 'features/tattoo_generator/domain/repositories/tattoo_repository.dart';
 import 'features/tattoo_generator/domain/usecases/generate_tattoo.dart';
+import 'features/tattoo_generator/domain/usecases/save_tattoo_to_gallery.dart';
 
 final sl = GetIt.instance;
 
 Future<void> init() async {
   // Use cases
   sl.registerLazySingleton(() => GenerateTattoo(sl()));
+  sl.registerLazySingleton(() => SaveTattooToGallery(sl()));
 
   // External
   sl.registerLazySingleton(() => Dio());

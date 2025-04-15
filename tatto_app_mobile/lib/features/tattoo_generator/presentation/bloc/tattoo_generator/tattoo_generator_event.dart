@@ -1,4 +1,4 @@
-part of 'tattoo_generator_bloc.dart';
+import 'package:equatable/equatable.dart';
 
 abstract class TattooGeneratorEvent extends Equatable {
   const TattooGeneratorEvent();

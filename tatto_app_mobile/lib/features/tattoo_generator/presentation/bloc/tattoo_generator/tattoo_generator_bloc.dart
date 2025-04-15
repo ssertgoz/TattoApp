@@ -1,15 +1,14 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:equatable/equatable.dart';
-import '../../domain/entities/tattoo.dart';
-import '../../domain/usecases/generate_tattoo.dart';
 
-part 'tattoo_generator_event.dart';
-part 'tattoo_generator_state.dart';
+import '../../../domain/usecases/generate_tattoo.dart';
+import 'tattoo_generator_event.dart';
+import 'tattoo_generator_state.dart';
 
 class TattooGeneratorBloc extends Bloc<TattooGeneratorEvent, TattooGeneratorState> {
   final GenerateTattoo generateTattoo;
-
-  TattooGeneratorBloc({required this.generateTattoo}) : super(TattooGeneratorInitial()) {
+  TattooGeneratorBloc({
+    required this.generateTattoo,
+  }) : super(TattooGeneratorInitial()) {
     on<GenerateTattooEvent>(_onGenerateTattoo);
   }
 
@@ -33,4 +32,6 @@ class TattooGeneratorBloc extends Bloc<TattooGeneratorEvent, TattooGeneratorStat
       (tattoo) => emit(TattooGeneratorSuccess(tattoo)),
     );
   }
+
+
 }

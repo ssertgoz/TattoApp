@@ -1,8 +1,9 @@
-part of 'tattoo_generator_bloc.dart';
+import 'package:equatable/equatable.dart';
+import '../../../domain/entities/tattoo.dart';
 
 abstract class TattooGeneratorState extends Equatable {
   const TattooGeneratorState();
-  
+
   @override
   List<Object> get props => [];
 }
@@ -28,3 +29,5 @@ class TattooGeneratorError extends TattooGeneratorState {
   @override
   List<Object> get props => [message];
 }
+
+

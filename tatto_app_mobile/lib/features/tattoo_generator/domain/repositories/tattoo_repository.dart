@@ -9,4 +9,6 @@ abstract class TattooRepository {
     required String outputLocation,
     required String aspectRatio,
   });
+
+  Future<Either<Failure, bool>> saveTattooToGallery(String imageUrl);
 }

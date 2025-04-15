@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tatto_app_mobile/core/constants/app_constants.dart';
 import 'package:tatto_app_mobile/core/widgets/choice_chip_selector.dart';
-import '../bloc/tattoo_generator_bloc.dart';
+
+import '../bloc/tattoo_generator/index.dart';
 import 'tattoo_generating_page.dart';
+import '../../../../main.dart';
 
 class TattooGeneratorPage extends StatefulWidget {
   const TattooGeneratorPage({super.key});
@@ -46,16 +48,13 @@ class _TattooGeneratorPageState extends State<TattooGeneratorPage> {
       ),
     );
 
-    Navigator.of(context).push(
+    navigatorKey.currentState?.push(
       MaterialPageRoute(
-        builder: (context) => BlocProvider.value(
-          value: bloc,
-          child: TattooGeneratingPage(
-            prompt: _promptController.text,
-            style: _selectedStyle,
-            outputLocation: _selectedLocation,
-            aspectRatio: _selectedAspectRatio,
-          ),
+        builder: (context) => TattooGeneratingPage(
+          prompt: _promptController.text,
+          style: _selectedStyle,
+          outputLocation: _selectedLocation,
+          aspectRatio: _selectedAspectRatio,
         ),
       ),
     );
@@ -94,7 +93,8 @@ class _TattooGeneratorPageState extends State<TattooGeneratorPage> {
                     contentPadding: const EdgeInsets.all(16),
                     suffixIcon: _promptController.text.isNotEmpty
                         ? IconButton(
-                            icon: const Icon(Icons.close, color: Colors.white54),
+                            icon:
+                                const Icon(Icons.close, color: Colors.white54),
                             onPressed: () {
                               setState(() {
                                 _promptController.clear();
@@ -141,7 +141,9 @@ class _TattooGeneratorPageState extends State<TattooGeneratorPage> {
                   minimumSize: const Size(double.infinity, 48),
                   disabledBackgroundColor: Colors.grey,
                 ),
-                onPressed: _promptController.text.trim().isEmpty ? null : _generateTattoo,
+                onPressed: _promptController.text.trim().isEmpty
+                    ? null
+                    : _generateTattoo,
                 child: const Text(
                   'Generate',
                   style: TextStyle(fontSize: 16, color: Colors.white),

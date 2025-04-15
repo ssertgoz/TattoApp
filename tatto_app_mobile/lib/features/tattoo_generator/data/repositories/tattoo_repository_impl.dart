@@ -29,4 +29,14 @@ class TattooRepositoryImpl implements TattooRepository {
       return Left(ServerFailure(e.toString()));
     }
   }
+
+  @override
+  Future<Either<Failure, bool>> saveTattooToGallery(String imageUrl) async {
+    try {
+      final result = await remoteDataSource.saveTattooToGallery(imageUrl);
+      return Right(result);
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
 }
