@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tatto_app_mobile/core/constants/app_constants.dart';
 
 class ChoiceChipSelector extends StatelessWidget {
   final List<String> options;
@@ -22,8 +23,8 @@ class ChoiceChipSelector extends StatelessWidget {
         if (label != null) ...[
           Text(
             label!,
-            style: const TextStyle(
-              color: Colors.white,
+            style: TextStyle(
+              color: AppConstants.white,
               fontSize: 16,
               fontWeight: FontWeight.bold,
             ),
@@ -37,7 +38,7 @@ class ChoiceChipSelector extends StatelessWidget {
               return Padding(
                 padding: const EdgeInsets.only(right: 8),
                 child: ChoiceChip(
-                  label: Text(option),
+                  label: Text(option[0].toUpperCase() + option.substring(1)),
                   selected: selectedOption == option,
                   showCheckmark: false,
                   onSelected: (selected) {
@@ -45,11 +46,16 @@ class ChoiceChipSelector extends StatelessWidget {
                       onOptionSelected(option);
                     }
                   },
-                  selectedColor: const Color(0xFFFF4B55),
-                  backgroundColor: Colors.white10,
+                  side: BorderSide.none,
+                  backgroundColor: AppConstants.grey,
+                  selectedColor: AppConstants.primaryColor,
                   labelStyle: TextStyle(
-                    color: selectedOption == option ? Colors.white : Colors.grey,
-                    fontWeight: selectedOption == option ? FontWeight.bold : FontWeight.normal,
+                    color: selectedOption == option
+                        ? AppConstants.white
+                        : AppConstants.white,
+                    fontWeight: selectedOption == option
+                        ? FontWeight.bold
+                        : FontWeight.normal,
                   ),
                 ),
               );

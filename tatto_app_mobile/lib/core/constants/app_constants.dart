@@ -54,4 +54,7 @@ class AppConstants {
   static const Color primaryColor = Color(0xFFFF4B55);
   static const Color backgroundColor = Color(0xFF000000);
   static const Color surfaceColor = Color(0x1AFFFFFF); // white10
+  static const Color white = Colors.white;
+  static const Color disabledColor = Colors.white10;
+  static const Color grey = Colors.black87;
 }

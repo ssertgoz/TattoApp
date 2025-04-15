@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tatto_app_mobile/core/constants/app_constants.dart';
+
 import '../../../../main.dart';
 import '../bloc/tattoo_generator/index.dart';
 import '../pages/tattoo_generating_page.dart';
@@ -53,9 +54,10 @@ class _EditPromptBottomSheetState extends State<EditPromptBottomSheet> {
       GenerateTattooEvent(
         prompt: _promptController.text,
         style: TattooStyle.values.firstWhere((s) => s.name == widget.style),
-        outputLocation: OutputLocation.values.firstWhere((s) => s.name == widget.outputLocation),
-        aspectRatio:
-            ImageAspectRatio.values.firstWhere((s) => s.toJsonValue() == widget.aspectRatio),
+        outputLocation: OutputLocation.values
+            .firstWhere((s) => s.name == widget.outputLocation),
+        aspectRatio: ImageAspectRatio.values
+            .firstWhere((s) => s.name == widget.aspectRatio),
       ),
     );
 
@@ -108,7 +110,7 @@ class _EditPromptBottomSheetState extends State<EditPromptBottomSheet> {
                 borderSide: BorderSide(color: Colors.white24),
               ),
               focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Color(0xFFFF4B55)),
+                borderSide: BorderSide(color: AppConstants.primaryColor),
               ),
               labelStyle: TextStyle(color: Colors.white70),
             ),
@@ -116,9 +118,11 @@ class _EditPromptBottomSheetState extends State<EditPromptBottomSheet> {
           const SizedBox(height: 16),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFFFF4B55),
+              foregroundColor: AppConstants.white,
+              disabledForegroundColor: AppConstants.grey,
+              backgroundColor: AppConstants.primaryColor,
               minimumSize: const Size(double.infinity, 48),
-              disabledBackgroundColor: Colors.grey,
+              disabledBackgroundColor: AppConstants.disabledColor,
             ),
             onPressed: _isPromptEdited ? _onEditPressed : null,
             child: const Text('Edit'),

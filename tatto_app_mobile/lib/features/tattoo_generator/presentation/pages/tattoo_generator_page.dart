@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tatto_app_mobile/core/constants/app_constants.dart';
-import 'package:tatto_app_mobile/core/widgets/choice_chip_selector.dart';
+import 'package:tatto_app_mobile/features/tattoo_generator/presentation/widgets/choice_chip_selector.dart';
 
+import '../../../../main.dart';
 import '../bloc/tattoo_generator/index.dart';
 import 'tattoo_generating_page.dart';
-import '../../../../main.dart';
 
 class TattooGeneratorPage extends StatefulWidget {
   const TattooGeneratorPage({super.key});
@@ -27,16 +27,6 @@ class _TattooGeneratorPageState extends State<TattooGeneratorPage> {
   }
 
   void _generateTattoo() {
-    if (_promptController.text.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Please enter a description'),
-          backgroundColor: Colors.black,
-        ),
-      );
-      return;
-    }
-
     final bloc = context.read<TattooGeneratorBloc>();
 
     bloc.add(
@@ -61,9 +51,9 @@ class _TattooGeneratorPageState extends State<TattooGeneratorPage> {
       backgroundColor: AppConstants.backgroundColor,
       appBar: AppBar(
         backgroundColor: AppConstants.backgroundColor,
-        title: const Text(
+        title: Text(
           'Tattoo Generator',
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: AppConstants.white),
         ),
         centerTitle: true,
       ),
@@ -75,12 +65,12 @@ class _TattooGeneratorPageState extends State<TattooGeneratorPage> {
             children: [
               Container(
                 decoration: BoxDecoration(
-                  color: Colors.white10,
+                  color: AppConstants.surfaceColor,
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: TextField(
                   controller: _promptController,
-                  style: const TextStyle(color: Colors.white),
+                  style: const TextStyle(color: AppConstants.white),
                   decoration: InputDecoration(
                     hintText: 'Enter your tattoo description',
                     hintStyle: const TextStyle(color: Colors.white54),
@@ -88,7 +78,8 @@ class _TattooGeneratorPageState extends State<TattooGeneratorPage> {
                     contentPadding: const EdgeInsets.all(16),
                     suffixIcon: _promptController.text.isNotEmpty
                         ? IconButton(
-                            icon: const Icon(Icons.close, color: Colors.white54),
+                            icon:
+                                const Icon(Icons.close, color: Colors.white54),
                             onPressed: () {
                               setState(() {
                                 _promptController.clear();
@@ -107,18 +98,19 @@ class _TattooGeneratorPageState extends State<TattooGeneratorPage> {
                 options: AppConstants.styles.map((s) => s.name).toList(),
                 selectedOption: _selectedStyle.name,
                 onOptionSelected: (style) {
-                  setState(
-                      () => _selectedStyle = TattooStyle.values.firstWhere((s) => s.name == style));
+                  setState(() => _selectedStyle =
+                      TattooStyle.values.firstWhere((s) => s.name == style));
                 },
               ),
               const SizedBox(height: 24),
               ChoiceChipSelector(
                 label: 'Output Location',
-                options: AppConstants.outputLocations.map((s) => s.name).toList(),
+                options:
+                    AppConstants.outputLocations.map((s) => s.name).toList(),
                 selectedOption: _selectedLocation.name,
                 onOptionSelected: (location) {
-                  setState(() => _selectedLocation =
-                      OutputLocation.values.firstWhere((s) => s.name == location));
+                  setState(() => _selectedLocation = OutputLocation.values
+                      .firstWhere((s) => s.name == location));
                 },
               ),
               const SizedBox(height: 24),
@@ -127,8 +119,8 @@ class _TattooGeneratorPageState extends State<TattooGeneratorPage> {
                 options: AppConstants.aspectRatios.map((s) => s.name).toList(),
                 selectedOption: _selectedAspectRatio.name,
                 onOptionSelected: (ratio) {
-                  setState(() => _selectedAspectRatio =
-                      ImageAspectRatio.values.firstWhere((s) => s.name == ratio));
+                  setState(() => _selectedAspectRatio = ImageAspectRatio.values
+                      .firstWhere((s) => s.name == ratio));
                 },
               ),
               const SizedBox(height: 32),
@@ -136,12 +128,17 @@ class _TattooGeneratorPageState extends State<TattooGeneratorPage> {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppConstants.primaryColor,
                   minimumSize: const Size(double.infinity, 48),
-                  disabledBackgroundColor: Colors.grey,
+                  disabledBackgroundColor: AppConstants.disabledColor,
                 ),
-                onPressed: _promptController.text.trim().isEmpty ? null : _generateTattoo,
+                onPressed: _promptController.text.trim().isEmpty
+                    ? null
+                    : _generateTattoo,
                 child: const Text(
                   'Generate',
-                  style: TextStyle(fontSize: 16, color: Colors.white),
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: AppConstants.white,
+                  ),
                 ),
               ),
             ],

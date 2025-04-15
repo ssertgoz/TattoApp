@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tatto_app_mobile/core/constants/app_constants.dart';
 import 'package:tatto_app_mobile/main.dart';
+
 import '../../domain/entities/tattoo.dart';
 import '../bloc/image_saver/index.dart';
 import '../bloc/tattoo_generator/index.dart';
@@ -59,7 +60,7 @@ class TattooResultPage extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: Colors.black,
           leading: IconButton(
-            icon: const Icon(Icons.arrow_back, color: Colors.white),
+            icon: const Icon(Icons.arrow_back, color: AppConstants.white),
             onPressed: () => navigatorKey.currentState?.pop(),
           ),
         ),
@@ -78,7 +79,7 @@ class TattooResultPage extends StatelessWidget {
                   Expanded(
                     child: OutlinedButton.icon(
                       style: OutlinedButton.styleFrom(
-                        foregroundColor: Colors.white,
+                        foregroundColor: AppConstants.white,
                         side: const BorderSide(color: Colors.white24),
                         padding: const EdgeInsets.symmetric(vertical: 12),
                       ),
@@ -87,11 +88,12 @@ class TattooResultPage extends StatelessWidget {
                         bloc.add(
                           GenerateTattooEvent(
                             prompt: tattoo.prompt,
-                            style: TattooStyle.values.firstWhere((s) => s.name == tattoo.style),
-                            outputLocation: OutputLocation.values
-                                .firstWhere((s) => s.name == tattoo.outputLocation),
-                            aspectRatio: ImageAspectRatio.values
-                                .firstWhere((s) => s.toJsonValue() == tattoo.aspectRatio),
+                            style: TattooStyle.values
+                                .firstWhere((s) => s.name == tattoo.style),
+                            outputLocation: OutputLocation.values.firstWhere(
+                                (s) => s.name == tattoo.outputLocation),
+                            aspectRatio: ImageAspectRatio.values.firstWhere(
+                                (s) => s.name == tattoo.aspectRatio),
                           ),
                         );
                         navigatorKey.currentState?.pushReplacement(
@@ -100,7 +102,8 @@ class TattooResultPage extends StatelessWidget {
                           ),
                         );
                       },
-                      icon: const Icon(Icons.refresh, color: Colors.white),
+                      icon:
+                          const Icon(Icons.refresh, color: AppConstants.white),
                       label: const Text('Recreate'),
                     ),
                   ),
@@ -108,18 +111,19 @@ class TattooResultPage extends StatelessWidget {
                   Expanded(
                     child: OutlinedButton.icon(
                       style: OutlinedButton.styleFrom(
-                        foregroundColor: Colors.white,
+                        foregroundColor: AppConstants.white,
                         side: const BorderSide(color: Colors.white24),
                         padding: const EdgeInsets.symmetric(vertical: 12),
                       ),
                       onPressed: () => _showEditPrompt(context),
-                      icon: const Icon(Icons.edit, color: Colors.white),
+                      icon: const Icon(Icons.edit, color: AppConstants.white),
                       label: const Text('Edit'),
                     ),
                   ),
                 ],
               ),
             ),
+            const SizedBox(height: 16),
             Padding(
               padding: const EdgeInsets.fromLTRB(16, 0, 16, 32),
               child: SizedBox(
@@ -127,8 +131,8 @@ class TattooResultPage extends StatelessWidget {
                 height: 56,
                 child: ElevatedButton.icon(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFFFF4B55),
-                    foregroundColor: Colors.white,
+                    backgroundColor: AppConstants.primaryColor,
+                    foregroundColor: AppConstants.white,
                   ),
                   onPressed: state is ImageSaverLoading
                       ? null
@@ -142,15 +146,15 @@ class TattooResultPage extends StatelessWidget {
                           width: 24,
                           height: 24,
                           child: CircularProgressIndicator(
-                            color: Colors.white,
+                            color: AppConstants.white,
                             strokeWidth: 2,
                           ),
                         )
-                      : const Icon(Icons.save_alt, color: Colors.white),
+                      : const Icon(Icons.save_alt, color: AppConstants.white),
                   label: Text(
                     state is ImageSaverLoading ? 'Saving...' : 'Save',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: AppConstants.white,
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                     ),

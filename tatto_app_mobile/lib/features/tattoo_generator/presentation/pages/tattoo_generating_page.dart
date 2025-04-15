@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tatto_app_mobile/core/constants/app_constants.dart';
 
+import '../../../../main.dart';
 import '../bloc/tattoo_generator/index.dart';
 import 'tattoo_result_page.dart';
-import '../../../../main.dart';
 
 class TattooGeneratingPage extends StatelessWidget {
   const TattooGeneratingPage({
@@ -17,7 +18,7 @@ class TattooGeneratingPage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.black,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          icon: const Icon(Icons.arrow_back, color: AppConstants.white),
           onPressed: () => navigatorKey.currentState?.pop(),
         ),
       ),
@@ -33,7 +34,7 @@ class TattooGeneratingPage extends StatelessWidget {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(state.message),
-                backgroundColor: Colors.red,
+                backgroundColor: AppConstants.primaryColor,
               ),
             );
             navigatorKey.currentState?.pop();
@@ -49,7 +50,7 @@ class TattooGeneratingPage extends StatelessWidget {
                   children: [
                     const Icon(
                       Icons.error_outline,
-                      color: Colors.red,
+                      color: AppConstants.primaryColor,
                       size: 64,
                     ),
                     const SizedBox(height: 16),
@@ -57,14 +58,14 @@ class TattooGeneratingPage extends StatelessWidget {
                       state.message,
                       textAlign: TextAlign.center,
                       style: const TextStyle(
-                        color: Colors.white,
+                        color: AppConstants.white,
                         fontSize: 16,
                       ),
                     ),
                     const SizedBox(height: 32),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.red,
+                        backgroundColor: AppConstants.primaryColor,
                         minimumSize: const Size(200, 48),
                       ),
                       onPressed: () => navigatorKey.currentState?.pop(),
