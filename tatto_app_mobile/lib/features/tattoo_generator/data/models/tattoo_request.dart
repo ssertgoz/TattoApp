@@ -24,9 +24,9 @@ class TattooRequest {
 
   Map<String, dynamic> toJson() => _$TattooRequestToJson(this);
 
-  static String _styleToJson(TattooStyle style) => style.toString().split('.').last;
+  static String _styleToJson(TattooStyle style) => style.name;
 
-  static String _locationToJson(OutputLocation location) => location.toString().split('.').last;
+  static String _locationToJson(OutputLocation location) => location.name;
 
-  static String _ratioToJson(ImageAspectRatio ratio) => ratio.toJsonValue();
+  static String _ratioToJson(ImageAspectRatio ratio) => ratio.name;
 }

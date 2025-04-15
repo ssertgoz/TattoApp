@@ -52,7 +52,7 @@ class TattooRemoteDataSourceImpl implements TattooRemoteDataSource {
           prompt: prompt,
           style: style.name,
           outputLocation: outputLocation.name,
-          aspectRatio: aspectRatio.toJsonValue(),
+          aspectRatio: aspectRatio.name,
         );
       } else {
         throw ServerException('Failed to generate tattoo: ${response.statusCode}');

@@ -11,7 +11,13 @@ class OutputLocation(str, Enum):
     BACK = "back"
     WHITEPAPER = "whitepaper"
 
+class ImageAspectRatio(str, Enum):
+    SQUARE = "square"
+    PORTRAIT = "portrait"
+    LANDSCAPE = "landscape"
+
 class TattooRequest(BaseModel):
     prompt: str
     style: TattooStyle
     output_location: OutputLocation
+    aspect_ratio: ImageAspectRatio

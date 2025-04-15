@@ -16,7 +16,7 @@ class TattooService:
         # Using Stable Diffusion XL model for high-quality tattoo generation
         self.model = "stability-ai/sdxl:39ed52f2a78e934b3ba6e2a89f5b1c712de7dfea535525255b1aa35c5565e08b"
 
-    async def generate_tattoo(self, prompt: str, style: str, output_location: str) -> str:
+    async def generate_tattoo(self, prompt: str, style: str, output_location: str, aspect_ratio: str) -> str:
         # Enhance prompt based on style and location
         enhanced_prompt = self._enhance_prompt(prompt, style, output_location)
         
@@ -29,6 +29,8 @@ class TattooService:
                     "negative_prompt": "blurry, low quality, distorted, deformed",
                     "num_inference_steps": 50,
                     "guidance_scale": 7.5,
+                    "width": self._get_width(aspect_ratio),
+                    "height": self._get_height(aspect_ratio),
                 }
             )
             
@@ -58,3 +60,21 @@ class TattooService:
         location_context = location_prompts[output_location]
 
         return f"{prompt}, {style_context}, {location_context}, highly detailed, realistic tattoo placement, 8k quality"
+
+    def _get_width(self, aspect_ratio: str) -> int:
+        """Get the width based on aspect ratio"""
+        ratio_map = {
+            "square": 1024,
+            "portrait": 768,
+            "landscape": 1024,
+        }
+        return ratio_map.get(aspect_ratio, 1024)
+
+    def _get_height(self, aspect_ratio: str) -> int:
+        """Get the height based on aspect ratio"""
+        ratio_map = {
+            "square": 1024,
+            "portrait": 1024,
+            "landscape": 768,
+        }
+        return ratio_map.get(aspect_ratio, 1024)

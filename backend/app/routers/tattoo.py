@@ -12,7 +12,8 @@ async def generate_tattoo(request: TattooRequest):
         image_url = await tattoo_service.generate_tattoo(
             prompt=request.prompt,
             style=request.style,
-            output_location=request.output_location
+            output_location=request.output_location,
+            aspect_ratio=request.aspect_ratio
         )
         return TattooResponse(image_url=image_url)
     except Exception as e:
